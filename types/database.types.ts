@@ -1,4 +1,5 @@
 export type GradedBook = {
+  cover_url: string | null | undefined;
   id: string;
   created_at: string;
   useremail: string;
