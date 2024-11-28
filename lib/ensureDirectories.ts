@@ -9,11 +9,11 @@ const REQUIRED_DIRECTORIES = [
   'tmp'
 ];
 
-export function ensureDirectoriesExist() {
-  REQUIRED_DIRECTORIES.forEach(dir => {
+export async function ensureDirectoriesExist() {
+  REQUIRED_DIRECTORIES.forEach(async dir => {
     const fullPath = path.join(process.cwd(), dir);
     if (!fs.existsSync(fullPath)) {
-      fs.mkdirSync(fullPath, { recursive: true });
+      await fs.mkdirSync(fullPath, { recursive: true });
       console.log(`Created directory: ${fullPath}`);
     }
   });
@@ -26,4 +26,18 @@ export function ensureDirectoryExists(dirPath: string) {
     console.log(`Created directory: ${fullPath}`);
   }
   return fullPath;
+}
+
+// Function to clear required directories
+export function clearRequiredDirectories() {
+  REQUIRED_DIRECTORIES.forEach(dir => {
+    const fullPath = path.join(process.cwd(), dir);
+    if (fs.existsSync(fullPath)) {
+      fs.readdirSync(fullPath).forEach(file => {
+        const filePath = path.join(fullPath, file);
+        fs.unlinkSync(filePath);
+      });
+      console.log(`Cleared directory: ${fullPath}`);
+    }
+  });
 }

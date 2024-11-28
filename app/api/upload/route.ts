@@ -3,7 +3,7 @@ import path from 'path';
 import fs from 'fs';
 import { PDFDocument } from 'pdf-lib';
 import { convertEPUBtoPDF } from '@/lib/epubConverter';
-import { ensureDirectoriesExist } from '@/lib/ensureDirectories';
+import { ensureDirectoriesExist, clearRequiredDirectories } from '@/lib/ensureDirectories';
 
 // Utility to write a buffer to a file
 async function writeBufferToFile(buffer: Uint8Array, filePath: string) {
@@ -16,7 +16,7 @@ async function writeBufferToFile(buffer: Uint8Array, filePath: string) {
 }
 
 export async function POST(req: NextRequest) {
-  ensureDirectoriesExist();
+  await ensureDirectoriesExist();
   const formData = await req.formData();
   const file = formData.get('file') as File;
 
@@ -75,6 +75,9 @@ export async function POST(req: NextRequest) {
     // Save the new PDF
     const newPdfBuffer = await newPdf.save();
     await writeBufferToFile(newPdfBuffer, finalFilePath);
+
+    // Clear directories after successful processing
+    clearRequiredDirectories();
 
     return NextResponse.json({
       message: 'File processed successfully',
