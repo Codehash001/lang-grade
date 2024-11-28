@@ -8,9 +8,8 @@ const parseCache = new Map<string, any>();
 
 export async function GET(request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url);
-    const fileName = searchParams.get('fileName');
-    const length = (searchParams.get('length') as 'short' | 'medium' | 'long') || 'medium';
+    const fileName = request.nextUrl.searchParams.get('fileName');
+    const length = (request.nextUrl.searchParams.get('length') as 'short' | 'medium' | 'long') || 'medium';
 
     if (!fileName) {
       return NextResponse.json({ error: 'fileName is required' }, { status: 400 });
