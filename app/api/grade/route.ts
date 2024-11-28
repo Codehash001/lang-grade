@@ -7,6 +7,8 @@ import { clearSpecificDirectories } from '@/lib/ensureDirectories';
 // Cache object to store parsed results
 const parseCache = new Map<string, any>();
 
+export const runtime = 'edge';
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
