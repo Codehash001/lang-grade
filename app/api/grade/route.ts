@@ -2,14 +2,16 @@ import { NextRequest, NextResponse } from 'next/server';
 import path from 'path';
 import fs from 'fs';
 import { parseDocument } from '@/lib/llamaparse';
+import { clearSpecificDirectories } from '@/lib/ensureDirectories';
 
 // Cache object to store parsed results
 const parseCache = new Map<string, any>();
 
-export async function GET(request: NextRequest) {
+export async function POST(request: NextRequest) {
   try {
-    const fileName = request.nextUrl.searchParams.get('fileName');
-    const length = (request.nextUrl.searchParams.get('length') as 'short' | 'medium' | 'long') || 'medium';
+    const body = await request.json();
+    const fileName = body.fileName;
+    const length = body.length || 'medium';
 
     if (!fileName) {
       return NextResponse.json({ error: 'fileName is required' }, { status: 400 });
@@ -37,6 +39,14 @@ export async function GET(request: NextRequest) {
     
     // Store in cache
     parseCache.set(cacheKey, result);
+
+    // Clear uploaded and tmp directories after successful processing
+    try {
+      await clearSpecificDirectories(['docs/uploaded', 'tmp']);
+    } catch (error) {
+      console.warn('Warning: Error clearing directories:', error);
+      // Continue with the response even if directory clearing fails
+    }
 
     return NextResponse.json(result);
   } catch (error) {

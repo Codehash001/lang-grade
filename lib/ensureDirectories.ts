@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { rimraf } from 'rimraf';
 
 // List of required directories
 const REQUIRED_DIRECTORIES = [
@@ -29,15 +30,37 @@ export function ensureDirectoryExists(dirPath: string) {
 }
 
 // Function to clear required directories
-export function clearRequiredDirectories() {
-  REQUIRED_DIRECTORIES.forEach(dir => {
-    const fullPath = path.join(process.cwd(), dir);
-    if (fs.existsSync(fullPath)) {
-      fs.readdirSync(fullPath).forEach(file => {
-        const filePath = path.join(fullPath, file);
-        fs.unlinkSync(filePath);
-      });
-      console.log(`Cleared directory: ${fullPath}`);
+export async function clearRequiredDirectories() {
+  for (const dir of REQUIRED_DIRECTORIES) {
+    try {
+      const fullPath = path.join(process.cwd(), dir);
+      if (fs.existsSync(fullPath)) {
+        // Using rimraf to safely remove directory contents
+        await rimraf(path.join(fullPath, '*'), { glob: true });
+        console.log(`Cleared directory: ${fullPath}`);
+      }
+    } catch (error) {
+      console.warn(`Warning: Could not clear directory ${dir}:`, error);
+      // Continue with other directories even if one fails
+      continue;
     }
-  });
+  }
+}
+
+// Function to clear specific directories
+export async function clearSpecificDirectories(directories: string[]) {
+  for (const dir of directories) {
+    try {
+      const fullPath = path.join(process.cwd(), dir);
+      if (fs.existsSync(fullPath)) {
+        // Using rimraf to safely remove directory contents
+        await rimraf(path.join(fullPath, '*'), { glob: true });
+        console.log(`Cleared directory: ${fullPath}`);
+      }
+    } catch (error) {
+      console.warn(`Warning: Could not clear directory ${dir}:`, error);
+      // Continue with other directories even if one fails
+      continue;
+    }
+  }
 }

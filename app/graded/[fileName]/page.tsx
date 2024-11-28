@@ -146,14 +146,17 @@ export default function GradePage({ params, searchParams }: GradePageProps) {
       setIsLoading(true);
       setError(null);
 
-      const response = await fetch(
-        `/api/grade?fileName=${encodeURIComponent(params.fileName)}${
-          searchParams.length ? `&length=${searchParams.length}` : ''
-        }`,
-        {
-          cache: 'force-cache'
-        }
-      );
+      const response = await fetch('/api/grade', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          fileName: params.fileName,
+          length: searchParams.length || undefined
+        }),
+        cache: 'force-cache'
+      });
 
       if (!response.ok) {
         const errorData = await response.json();

@@ -77,7 +77,12 @@ export async function POST(req: NextRequest) {
     await writeBufferToFile(newPdfBuffer, finalFilePath);
 
     // Clear directories after successful processing
-    clearRequiredDirectories();
+    try {
+      await clearRequiredDirectories();
+    } catch (error) {
+      console.warn('Warning: Error clearing directories:', error);
+      // Continue with the response even if directory clearing fails
+    }
 
     return NextResponse.json({
       message: 'File processed successfully',
