@@ -1,8 +1,0 @@
-README.md
-.git
-.env
-node_modules/.cache
-*.test.js
-__tests__
-test
-tests
