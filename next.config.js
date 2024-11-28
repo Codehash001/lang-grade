@@ -8,6 +8,12 @@ const nextConfig = {
       });
     }
 
+    // Optimize bundle size
+    config.optimization = {
+      ...config.optimization,
+      minimize: true,
+    };
+
     return config;
   },
   images: {
@@ -25,6 +31,10 @@ const nextConfig = {
     ],
     unoptimized: true,
   },
+  experimental: {
+    serverComponentsExternalPackages: ['sharp', '@prisma/client'],
+  },
+  output: 'standalone',
 }
 
 module.exports = nextConfig
