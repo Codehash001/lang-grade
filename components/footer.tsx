@@ -84,7 +84,7 @@ export function Footer() {
           {/* Dock Icons */}
           {[
             { tooltip: "Home", icon: <Home className="w-6 h-6 text-gray-600" /> , destination: "/" },
-            { tooltip: "My-books", icon: <LayoutGrid className="w-6 h-6 text-gray-600" /> , destination: "/my-books" },
+            { tooltip: "My books", icon: <LayoutGrid className="w-6 h-6 text-gray-600" /> , destination: "/my-books" },
             { tooltip: "Library", icon: <LibraryBig className="w-6 h-6 text-gray-600" /> , destination: "/library" },
           ].map((item, index) => (
             <DockIcon
@@ -95,7 +95,8 @@ export function Footer() {
               {/* Tooltip for each icon */}
               <div
                 className={`absolute -top-8 left-1/2 transform -translate-x-1/2 px-2 py-1 text-xs text-white 
-                           bg-gray-800 rounded-md shadow-md opacity-0 scale-75 transition-all duration-300 group-hover:opacity-100 group-hover:scale-100`}
+                           bg-gray-800 rounded-md shadow-md opacity-0 scale-75 whitespace-nowrap
+                           transition-all duration-300 group-hover:opacity-100 group-hover:scale-100`}
               >
                 {item.tooltip}
               </div>
