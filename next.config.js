@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: false, // Disable Strict Mode to prevent double rendering
   webpack: (config, { isServer }) => {
     // Prevent webpack from trying to bundle native modules
     if (isServer) {

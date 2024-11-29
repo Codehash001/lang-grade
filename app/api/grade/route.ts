@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { parseDocument } from '@/lib/llamaparse';
-import { clearSpecificDirectories } from '@/lib/ensureDirectories';
+import { clearSpecificDirectories, ensureDirectoriesExist } from '@/lib/ensureDirectories';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -12,6 +12,9 @@ const parseCache = new Map<string, any>();
 
 export async function POST(request: NextRequest) {
   try {
+    // Ensure directories exist first
+    await ensureDirectoriesExist();
+    
     const body = await request.json();
     const fileName = body.fileName;
     const length = body.length || 'medium';
@@ -28,7 +31,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(parseCache.get(cacheKey));
     }
 
-    const filePath = path.join('/docs/uploaded', fileName);
+    const filePath = path.join(process.cwd(), 'docs', 'uploaded', fileName);
 
     if (!fs.existsSync(filePath)) {
       return NextResponse.json(

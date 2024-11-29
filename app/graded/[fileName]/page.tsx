@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, useCallback, useMemo } from 'react';
+import React, { useEffect, useState, useCallback, useMemo, useRef } from 'react';
 import { notFound } from 'next/navigation';
 import LazyBookCover from '@/components/LazyBookCover';
 import { saveGradedBook } from '@/lib/bookService';
@@ -139,9 +139,11 @@ const ResultView = React.memo(function ResultView({ content }: { content: Parsed
 export default function GradePage({ params, searchParams }: GradePageProps) {
   const [content, setContent] = useState<ParsedContent | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchContent = useCallback(async () => {
+    if (isLoading) return; // Prevent double fetching if already loading
+    
     try {
       setIsLoading(true);
       setError(null);
@@ -155,7 +157,7 @@ export default function GradePage({ params, searchParams }: GradePageProps) {
           fileName: params.fileName,
           length: searchParams.length || undefined
         }),
-        cache: 'force-cache'
+        cache: 'no-store'
       });
 
       if (!response.ok) {
@@ -170,11 +172,13 @@ export default function GradePage({ params, searchParams }: GradePageProps) {
     } finally {
       setIsLoading(false);
     }
-  }, [params.fileName, searchParams.length]);
+  }, [params.fileName, searchParams.length, isLoading]);
 
   useEffect(() => {
-    fetchContent();
-  }, [fetchContent]);
+    if (!content && !error) {
+      fetchContent();
+    }
+  }, [fetchContent, content, error]);
 
   if (error) {
     return <ErrorState error={error} />;

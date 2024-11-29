@@ -3,7 +3,7 @@ import path from 'path';
 import fs from 'fs';
 import { PDFDocument } from 'pdf-lib';
 import { convertEPUBtoPDF } from '@/lib/epubConverter';
-import { ensureDirectoriesExist, clearRequiredDirectories } from '@/lib/ensureDirectories';
+import { ensureDirectoriesExist } from '@/lib/ensureDirectories';
 
 export const runtime = 'nodejs';
 
@@ -77,14 +77,6 @@ export async function POST(req: NextRequest) {
     // Save the new PDF
     const newPdfBuffer = await newPdf.save();
     await writeBufferToFile(newPdfBuffer, finalFilePath);
-
-    // Clear directories after successful processing
-    try {
-      await clearRequiredDirectories();
-    } catch (error) {
-      console.warn('Warning: Error clearing directories:', error);
-      // Continue with the response even if directory clearing fails
-    }
 
     return NextResponse.json({
       message: 'File processed successfully',

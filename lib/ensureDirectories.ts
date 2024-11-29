@@ -38,7 +38,9 @@ export async function clearRequiredDirectories() {
       const fullPath = path.join(process.cwd(), dir);
       if (fs.existsSync(fullPath)) {
         // Using rimraf to safely remove directory contents
-        await rimraf(path.join(fullPath, '*'), { glob: true });
+        await rimraf(fullPath);
+        // Recreate the empty directory
+        fs.mkdirSync(fullPath, { recursive: true });
         console.log(`Cleared directory: ${fullPath}`);
       }
     } catch (error) {
@@ -56,7 +58,9 @@ export async function clearSpecificDirectories(directories: string[]) {
       const fullPath = path.join(process.cwd(), dir);
       if (fs.existsSync(fullPath)) {
         // Using rimraf to safely remove directory contents
-        await rimraf(path.join(fullPath, '*'), { glob: true });
+        await rimraf(fullPath);
+        // Recreate the empty directory
+        fs.mkdirSync(fullPath, { recursive: true });
         console.log(`Cleared directory: ${fullPath}`);
       }
     } catch (error) {
