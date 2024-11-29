@@ -32,6 +32,10 @@ declare global {
     interface Window {
         otpless: OtplessExtended;
     }
+    interface GlobalThis {
+      fs?: typeof import('fs');
+      path?: typeof import('path');
+    }
 }
 
   export {};

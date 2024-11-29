@@ -2,6 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import { rimraf } from 'rimraf';
 
+export const runtime = 'nodejs';
+
 // List of required directories
 const REQUIRED_DIRECTORIES = [
   'docs',

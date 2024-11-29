@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import path from 'path';
-import fs from 'fs';
 import { parseDocument } from '@/lib/llamaparse';
 import { clearSpecificDirectories } from '@/lib/ensureDirectories';
+import * as fs from 'fs';
+import * as path from 'path';
+
+// Specify that this route should use Node.js runtime
+export const runtime = 'nodejs';
 
 // Cache object to store parsed results
 const parseCache = new Map<string, any>();
@@ -25,7 +28,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(parseCache.get(cacheKey));
     }
 
-    const filePath = path.join(process.cwd(), 'docs', 'uploaded', fileName);
+    const filePath = path.join('/docs/uploaded', fileName);
 
     if (!fs.existsSync(filePath)) {
       return NextResponse.json(

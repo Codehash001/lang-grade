@@ -5,6 +5,8 @@ import { PDFDocument } from 'pdf-lib';
 import { convertEPUBtoPDF } from '@/lib/epubConverter';
 import { ensureDirectoriesExist, clearRequiredDirectories } from '@/lib/ensureDirectories';
 
+export const runtime = 'nodejs';
+
 // Utility to write a buffer to a file
 async function writeBufferToFile(buffer: Uint8Array, filePath: string) {
   return new Promise<void>((resolve, reject) => {
