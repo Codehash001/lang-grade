@@ -125,7 +125,7 @@ export default function InitGradeUI() {
           <div className="flex text-sm text-gray-600">
             <label
               htmlFor="file-upload"
-              className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-700"
+              className="relative cursor-pointer bg-lightblue rounded-md font-medium text-indigo-600 hover:text-indigo-700"
             >
               <span>Upload a file</span>
               <input id="file-upload" name="file-upload" type="file" className="sr-only" onChange={handleFileChange} />
