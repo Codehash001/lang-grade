@@ -11,6 +11,7 @@ import type { GradedBook } from '@/types/database.types';
 import { UserInfo } from "@/lib/authUtils";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from 'next/navigation'
+import UpdateBookCover from '@/components/UpdateBookCover';
 
 interface HeroLeftProps {
   user: UserInfo | null;
@@ -110,14 +111,13 @@ export default function MyBooksPage({
               </Button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 md:gap-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 md:gap-10">
               {filteredBooks.map((book) => (
                 <div
                   key={book.id}
-                  className="relative border border-white backdrop-blur-sm rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:transform hover:scale-105 p-2 cursor-pointer"
-                  onClick={() => handleBookClick(book)}
+                  className="relative border border-white backdrop-blur-sm rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:transform hover:scale-105 p-2"
                 >
-                  <div className="relative aspect-[4/5]">
+                  <div className="relative aspect-[3/4]">
                     <LazyBookCover 
                       title={book.bookname}
                       author={book.author}
@@ -125,6 +125,23 @@ export default function MyBooksPage({
                       coverUrl={book.cover_url}
                       className="w-full h-full"
                     />
+                    <div className='absolute top-2 right-2'>
+                    <UpdateBookCover
+                        bookId={book.id}
+                        currentCoverUrl={book.cover_url}
+                        onUpdate={(newCoverUrl) => {
+                          if (newCoverUrl && typeof newCoverUrl === 'string') {
+                            setBooks(prevBooks =>
+                              prevBooks.map(b =>
+                                b.id === book.id
+                                  ? { ...b, cover_url: newCoverUrl }
+                                  : b
+                              )
+                            );
+                          }
+                        }}
+                      />
+                      </div>
                   </div>
                   <div className="p-4 space-y-2">
                     <h3 className="font-semibold text-gray-800 line-clamp-2">
@@ -133,13 +150,12 @@ export default function MyBooksPage({
                     <p className="text-sm text-gray-600">
                       <span className='text-black'>By</span> {book.author}
                     </p>
-                    {book.booklanguage && (
-                    <span className="p-1 bg-green-100 text-green-800 rounded-lg text-xs">
-                        {book.booklanguage}
-                      </span>)}
-                    <div className="flex items-center justify-between absolute -top-2 -right-2">
+                    <div className="flex items-center justify-between space-x-2">
                       <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-lg text-sm">
                         {book.languagelevel}
+                      </span>
+                      <span className="px-3 py-1 bg-green-100 text-green-800 rounded-lg text-sm">
+                        {book.booklanguage}
                       </span>
                     </div>
                   </div>
