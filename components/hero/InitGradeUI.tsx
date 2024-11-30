@@ -164,9 +164,9 @@ export default function InitGradeUI() {
       <SelectContent>
         <SelectGroup>
           <SelectLabel>Choose Summary Length</SelectLabel>
-          <SelectItem value="short">Short</SelectItem>
-          <SelectItem value="medium">Medium</SelectItem>
-          <SelectItem value="long">Long</SelectItem>
+          <SelectItem value="short">Short Summary</SelectItem>
+          <SelectItem value="medium">Medium Summary</SelectItem>
+          <SelectItem value="long">Long Summary</SelectItem>
         </SelectGroup>
       </SelectContent>
     </Select>

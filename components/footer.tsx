@@ -83,7 +83,12 @@ export function Footer() {
           </div>
           {/* Dock Icons */}
           {[
-            { tooltip: "Home", icon: <Home className="w-6 h-6 text-gray-600" /> , destination: "/" },
+            {tooltip: "Home" , icon:<div className="bg-white text-white rounded-full w-full h-full  flex items-center justify-center">
+              <span className="text-xs font-bold">
+                <img src="/images/logo.png" alt="Logo" className="w-8 h-auto"/>
+              </span>
+            </div> ,
+            destination: "/"},
             { tooltip: "My books", icon: <LayoutGrid className="w-6 h-6 text-gray-600" /> , destination: "/my-books" },
             { tooltip: "Library", icon: <LibraryBig className="w-6 h-6 text-gray-600" /> , destination: "/library" },
             { tooltip: "Grade articles", icon: <Newspaper className="w-6 h-6 text-gray-600" /> , destination: "/grade-article" },

@@ -12,6 +12,7 @@ import { UserInfo } from "@/lib/authUtils";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from 'next/navigation'
 import UpdateBookCover from '@/components/UpdateBookCover';
+import SearchBooks from '@/components/SearchBooks';
 
 interface HeroLeftProps {
   user: UserInfo | null;
@@ -27,6 +28,7 @@ export default function MyBooksPage({
   const [loading, setLoading] = useState(true);
   const [showGradeUI, setShowGradeUI] = useState(false);
   const [user, setUser] = useState<UserInfo | null>(null);
+  const [filteredBooks, setFilteredBooks] = useState<GradedBook[]>([]);
 
   const router = useRouter();
   
@@ -44,6 +46,7 @@ export default function MyBooksPage({
         setLoading(true);
         const data = await getUserBooks(user.email);
         setBooks(data);
+        setFilteredBooks(data);
       } catch (error) {
         console.error('Error fetching books:', error);
       } finally {
@@ -63,9 +66,20 @@ export default function MyBooksPage({
     setSelectedBook(book);
   };
 
-  const filteredBooks = searchParams?.level && searchParams.level !== 'all'
-    ? books.filter(book => isInRange(book.languagelevel, searchParams.level))
-    : books;
+  const handleSearch = (query: string) => {
+    const lowercaseQuery = query.toLowerCase();
+    const filtered = books.filter(book => 
+      book.bookname.toLowerCase().includes(lowercaseQuery) ||
+      book.author.toLowerCase().includes(lowercaseQuery) ||
+      book.booklanguage.toLowerCase().includes(lowercaseQuery) ||
+      book.languagelevel.toLowerCase().includes(lowercaseQuery)
+    );
+    setFilteredBooks(filtered);
+  };
+
+  const filteredBooksByLevel = searchParams?.level && searchParams.level !== 'all'
+    ? filteredBooks.filter(book => isInRange(book.languagelevel, searchParams.level))
+    : filteredBooks;
 
     if(!user){
       return(
@@ -81,10 +95,17 @@ export default function MyBooksPage({
       {/* Fixed Header */}
       <div className="flex-none sm:px-8 px-5 py-6 shadow backdrop-blur-sm border-b border-gray-200">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <h1 className="sm:text-4xl text-xl font-bold text-gray-800">My Books</h1>
+          <div className='flex items-center space-x-4'>
+          <div className="bg-white text-white rounded-full border border-gray-200 shadow-xl w-12 h-12 flex items-center justify-center">
+        <span className="text-xs font-bold">
+          <img src="/images/logo.png" alt="Logo" className="w-10 h-auto"/>
+        </span>
+      </div>
+      <h1 className="sm:text-4xl text-xl font-bold text-gray-800">My Books</h1>
+          </div>
           <div className="flex items-center gap-4">
-            <div className="sm:w-64 w-32">
-              <LibraryFilter />
+            <div className="w-auto">
+            <SearchBooks onSearch={handleSearch} />
             </div>
             <Button 
               onClick={() => setShowGradeUI(true)}
@@ -92,18 +113,19 @@ export default function MyBooksPage({
             >
               Grade New Book
             </Button>
+            
           </div>
         </div>
       </div>
 
       {/* Scrollable Content */}
       <div className="flex-grow overflow-y-auto">
-        <div className="max-w-7xl mx-auto p-8">
+        <div className="container mx-auto p-4">
           {loading ? (
             <div className="flex justify-center items-center h-64">
               <div className="text-gray-600">Loading books...</div>
             </div>
-          ) : filteredBooks.length === 0 ? (
+          ) : filteredBooksByLevel.length === 0 ? (
             <div className="flex flex-col justify-center items-center h-64 space-y-4">
               <div className="text-gray-600">No books found</div>
               <Button onClick={() => setShowGradeUI(true)}>
@@ -111,8 +133,8 @@ export default function MyBooksPage({
               </Button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 md:gap-10">
-              {filteredBooks.map((book) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+              {filteredBooksByLevel.map((book) => (
                 <div
                   key={book.id}
                   className="relative border border-white backdrop-blur-sm rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:transform hover:scale-105 p-2"

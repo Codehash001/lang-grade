@@ -80,7 +80,14 @@ export default function GradeArticlePage() {
       {/* Fixed Header */}
       <header className="flex-none sm:px-8 px-5 py-2 shadow backdrop-blur-sm border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6">
-          <h1 className="text-xl sm:text-3xl font-bold text-gray-800">LangGrade - Grade an Article</h1>
+        <div className='flex items-center space-x-4'>
+          <div className="bg-white text-white rounded-full border border-gray-200 shadow-xl w-12 h-12 flex items-center justify-center">
+        <span className="text-xs font-bold">
+          <img src="/images/logo.png" alt="Logo" className="w-10 h-auto"/>
+        </span>
+      </div>
+      <h1 className="sm:text-4xl text-xl font-bold text-gray-800">Grade Articles</h1>
+          </div>
         </div>
       </header>
 
