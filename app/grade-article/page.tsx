@@ -89,7 +89,7 @@ export default function GradeArticlePage() {
       </header>
 
       {/* Scrollable Content */}
-      <main className="flex-1 overflow-auto mih-h-screen items-center justify-center">
+      <main className="flex-1 overflow-auto items-center justify-center pb-10">
         <div className="max-w-7xl mx-auto px-4 py-6 sm:px-6 space-y-6 h-full">
           {/* Input Methods Grid */}
           <div className="grid gap-6 sm:grid-cols-2">
