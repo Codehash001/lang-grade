@@ -77,7 +77,7 @@ export default function GradeArticlePage() {
   }
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="min-h-screen flex flex-col">
       {/* Fixed Header */}
       <header className="flex-none sm:px-8 px-5 py-2 shadow backdrop-blur-sm border-b border-gray-200 bg-sunflower">
         <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6">
@@ -89,7 +89,7 @@ export default function GradeArticlePage() {
       </header>
 
       {/* Scrollable Content */}
-      <main className="flex-1 overflow-auto items-center justify-center pb-10">
+      <div className="flex-1 overflow-auto pb-10">
         <div className="max-w-7xl mx-auto px-4 py-6 sm:px-6 space-y-6 h-full">
           {/* Input Methods Grid */}
           <div className="grid gap-6 sm:grid-cols-2">
@@ -178,7 +178,7 @@ export default function GradeArticlePage() {
             </div>
           )}
         </div>
-      </main>
+      </div>
 
     </div>
   )

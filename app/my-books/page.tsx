@@ -93,7 +93,7 @@ export default function MyBooksPage({
   
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="min-h-screen flex flex-col">
       {/* Fixed Header */}
       <div className="flex-none sm:px-8 px-5 py-6 shadow backdrop-blur-sm border-b border-gray-200 bg-sunflower/80">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
@@ -117,7 +117,7 @@ export default function MyBooksPage({
       </div>
 
       {/* Scrollable Content */}
-      <div className="flex-grow overflow-y-auto pb-10">
+      <div className="flex-1 overflow-auto pb-10">
         <div className="container mx-auto p-4">
           {loading ? (
             <div className="flex justify-center items-center h-64">
