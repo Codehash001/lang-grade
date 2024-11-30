@@ -119,7 +119,7 @@ export default function MyBooksPage({
       </div>
 
       {/* Scrollable Content */}
-      <div className="flex-grow overflow-y-auto">
+      <div className="flex-grow overflow-y-auto pb-10">
         <div className="container mx-auto p-4">
           {loading ? (
             <div className="flex justify-center items-center h-64">
