@@ -32,7 +32,7 @@ export function HeroLeft({ user }: HeroLeftProps) {
       </Link>) :
     (<AuthButton />)}
     <Link href="/library">
-    <Button variant="outline">Explore Library →</Button>
+    <Button >Explore Library →</Button>
     </Link>
 
     </div>

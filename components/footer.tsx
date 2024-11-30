@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Dock, DockIcon } from "@/components/ui/dock";
-import { Home, KeyRound, LayoutGrid, LibraryBig, LogOut, X } from "lucide-react";
+import { Home, KeyRound, LayoutGrid, LibraryBig, LogOut, Newspaper, X } from "lucide-react";
 import { useRouter } from 'next/navigation'
 import { signOut, UserInfo } from "@/lib/authUtils";
 
@@ -86,6 +86,7 @@ export function Footer() {
             { tooltip: "Home", icon: <Home className="w-6 h-6 text-gray-600" /> , destination: "/" },
             { tooltip: "My books", icon: <LayoutGrid className="w-6 h-6 text-gray-600" /> , destination: "/my-books" },
             { tooltip: "Library", icon: <LibraryBig className="w-6 h-6 text-gray-600" /> , destination: "/library" },
+            { tooltip: "Grade articles", icon: <Newspaper className="w-6 h-6 text-gray-600" /> , destination: "/grade-article" },
           ].map((item, index) => (
             <DockIcon
               key={index}

@@ -7,6 +7,7 @@ export type GradedBook = {
   author: string;
   summary: string;
   languagelevel: string;
+  booklanguage: string;
   coverimageurl?: string;
 }
 

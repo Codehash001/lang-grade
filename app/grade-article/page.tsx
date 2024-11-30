@@ -76,11 +76,11 @@ export default function GradeArticlePage() {
   }
 
   return (
-    <div className="flex flex-col h-screen bg-gray-50">
+    <div className="flex flex-col h-screen">
       {/* Fixed Header */}
-      <header className="flex-none border-b border-gray-200 bg-white/80 backdrop-blur-sm">
+      <header className="flex-none sm:px-8 px-5 py-2 shadow backdrop-blur-sm border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">Grade an Article</h1>
+          <h1 className="text-xl sm:text-3xl font-bold text-gray-800">LangGrade - Grade an Article</h1>
         </div>
       </header>
 
@@ -90,35 +90,36 @@ export default function GradeArticlePage() {
           {/* Input Methods Grid */}
           <div className="grid gap-6 sm:grid-cols-2">
             {/* URL Input */}
-            <div className="bg-white p-4 sm:p-6 rounded-lg border shadow-sm">
+            <div className="bg-white p-4 sm:p-6 rounded-lg border shadow-sm flex flex-col h-full">
               <h2 className="text-xl font-semibold mb-2">Article URL</h2>
               <p className="text-sm text-gray-600 mb-4">Paste the URL of the article you want to analyze</p>
-              <form onSubmit={(e) => handleSubmit(e, true)} className="space-y-4">
+              <form onSubmit={(e) => handleSubmit(e, true)} className="flex flex-col flex-grow">
                 <Input
                   placeholder="https://example.com/article"
                   value={articleUrl}
                   onChange={(e) => setArticleUrl(e.target.value)}
                   disabled={loading}
                 />
-                <Button type="submit" className="w-full" disabled={loading || !articleUrl.trim()}>
+                <div className="flex-grow"></div>
+                <Button type="submit" className="w-full mt-4" disabled={loading || !articleUrl.trim()}>
                   {loading ? 'Processing...' : 'Grade from URL'}
                 </Button>
               </form>
             </div>
 
             {/* Text Input */}
-            <div className="bg-white p-4 sm:p-6 rounded-lg border shadow-sm">
+            <div className="bg-white p-4 sm:p-6 rounded-lg border shadow-sm flex flex-col h-full">
               <h2 className="text-xl font-semibold mb-2">Article Text</h2>
               <p className="text-sm text-gray-600 mb-4">Or paste the article text directly</p>
-              <form onSubmit={(e) => handleSubmit(e, false)} className="space-y-4">
+              <form onSubmit={(e) => handleSubmit(e, false)} className="flex flex-col flex-grow">
                 <Textarea
                   placeholder="Paste your article text here..."
                   value={articleText}
                   onChange={(e) => setArticleText(e.target.value)}
-                  className="min-h-[120px] resize-y"
+                  className="min-h-[120px] resize-y flex-grow"
                   disabled={loading}
                 />
-                <Button type="submit" className="w-full" disabled={loading || !articleText.trim()}>
+                <Button type="submit" className="w-full mt-4" disabled={loading || !articleText.trim()}>
                   {loading ? 'Processing...' : 'Grade Text'}
                 </Button>
               </form>
@@ -175,14 +176,6 @@ export default function GradeArticlePage() {
         </div>
       </main>
 
-      {/* Fixed Footer */}
-      <footer className="flex-none border-t border-gray-200 bg-white">
-        <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6">
-          <p className="text-sm text-gray-500 text-center">
-            Powered by OpenAI and LlamaIndex
-          </p>
-        </div>
-      </footer>
     </div>
   )
 }

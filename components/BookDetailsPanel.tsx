@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import LazyBookCover from './LazyBookCover';
+import { slugify } from '@/lib/urlUtils';
 import type { GradedBook } from '@/types/database.types';
 
 interface BookDetailsPanelProps {
@@ -13,6 +14,12 @@ interface BookDetailsPanelProps {
 
 export default function BookDetailsPanel({ book, relatedBooks, onClose }: BookDetailsPanelProps) {
   if (!book) return null;
+
+  const handleBookClick = (book: GradedBook) => {
+    const titleSlug = slugify(book.bookname);
+    const levelSlug = slugify(book.languagelevel);
+    window.location.href = `/library/${titleSlug}/${levelSlug}/${book.id}`;
+  };
 
   return (
     <AnimatePresence>
@@ -74,7 +81,8 @@ export default function BookDetailsPanel({ book, relatedBooks, onClose }: BookDe
               {relatedBooks.map((relatedBook) => (
                 <div
                   key={relatedBook.id}
-                  className="relative border border-white backdrop-blur-sm rounded-lg shadow-md overflow-hidden p-2"
+                  className="relative border border-white backdrop-blur-sm rounded-lg shadow-md overflow-hidden p-2 cursor-pointer"
+                  onClick={() => handleBookClick(relatedBook)}
                 >
                   <div className="relative aspect-[3/4]">
                     <LazyBookCover 

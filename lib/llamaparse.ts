@@ -16,6 +16,7 @@ const bookAnalysisSchema = z.object({
   bookName: z.string(),
   author: z.string(),
   languageLevel: z.string(),
+  bookLanguage: z.string(),
   summary: z.string()
 });
 
@@ -27,14 +28,13 @@ const formatInstructions = `Respond only in valid JSON. Extract the following in
 {
   "bookName": "exact name of the book",
   "author": "name of the author",
-  "languageLevel": "language proficiency level range in CEFR language level (A1, A2, B1, etc.), generating a grade (ideally a range,
-e.g. A2 - B1)",
+  "languageLevel": "language proficiency level range in CEFR language level (A1, A2, B1, etc.), generating a grade (ideally a range, e.g. A2 - B1)",
+  "bookLanguage": "the language in which the book is written (e.g., English, Spanish, French, etc.)",
   "summary": "leave empty string, will be filled later"
 }`;
 
 const analysisPrompt = ChatPromptTemplate.fromTemplate(
-  `You are an expert language learning book analyzer. Your task is to carefully extract the book name, author name, and language proficiency level range from the provided text. If the language level is not explicitly stated, analyze the content complexity to determine the appropriate CEFR language level (A1, A2, B1, etc.), generating a grade (ideally a range,
-e.g. A2 - B1)
+  `You are an expert language learning book analyzer. Your task is to carefully extract the book name, author name, language proficiency level range, and the language of the book from the provided text. If the language level is not explicitly stated, analyze the content complexity to determine the appropriate CEFR language level (A1, A2, B1, etc.), generating a grade (ideally a range, e.g. A2 - B1)
 
 {format_instructions}
 
@@ -45,7 +45,7 @@ Return the analysis in the specified JSON format.`
 
 async function getStructuredAnalysis(text: string): Promise<DocumentAnalysis> {
   const model = new ChatOpenAI({
-    modelName: "gpt-4o-mini",
+    modelName: "gpt-4",
     temperature: 0
   });
 
@@ -90,14 +90,15 @@ export async function parseDocument(filePath: string, summaryLength: string) {
     // Generate summary using the index
     console.log('Generating summary...');
     const query = await summaryIndex.asQueryEngine().query({
-      query: `Please provide a ${summaryLength} summary of the document and language level used in the document in approximately ${
+      query: `Please provide a ${summaryLength} summary of the document and give a idea about language complexity of the document in approximately ${
         summaryLength === 'short' ? '100' : 
         summaryLength === 'long' ? '450' : '250'
-      } words. Use the original language of the document`
+      } words. Use only English.`,
     });
     
     const summary = query.message.content;
     console.log('Summary generated successfully');
+    console.log('Analysis results:', analysis);
 
     // Return the complete analysis
     return {
@@ -105,7 +106,8 @@ export async function parseDocument(filePath: string, summaryLength: string) {
       metadata: {
         bookName: analysis.bookName,
         author: analysis.author,
-        languageLevel: analysis.languageLevel
+        languageLevel: analysis.languageLevel,
+        bookLanguage: analysis.bookLanguage || 'English'
       }
     };
 

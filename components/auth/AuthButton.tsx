@@ -38,7 +38,7 @@ export function AuthButton() {
     }
 
     return (
-        <Button onClick={handleLogin}>
+        <Button onClick={handleLogin} variant={"outline"}>
             Login
         </Button>
     );

@@ -78,6 +78,7 @@ const ResultView = React.memo(function ResultView({ content }: { content: Parsed
         author: content.metadata.author || 'Unknown',
         summary: content.summary,
         languagelevel: content.metadata.languageLevel,
+        booklanguage: content.metadata.bookLanguage || 'English',
         coverimageurl: content.metadata.coverImageUrl || ''
       }).catch(console.error);
     }

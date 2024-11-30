@@ -2,7 +2,7 @@ import { supabase } from './supabase';
 import type { Database, GradedBook } from '@/types/database.types';
 import { fetchBookCover } from './openLibraryService';
 
-export async function saveGradedBook(book: Omit<GradedBook, 'id' | 'created_at' | 'cover_url'>) {
+export async function saveGradedBook(book: Omit<GradedBook, 'id' | 'created_at' | 'cover_url'> & { booklanguage: string }) {
   try {
     console.log('Checking for existing book:', book.bookname);
     
@@ -84,7 +84,27 @@ export async function getAllBooks() {
   return data;
 }
 
-export async function getBookById(id: string) {
+export async function getBookById(id: string): Promise<GradedBook | null> {
+  try {
+    const { data, error } = await supabase
+      .from('graded_books')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (error) {
+      console.error('Error fetching book by ID:', error);
+      return null;
+    }
+
+    return data;
+  } catch (error) {
+    console.error('Error fetching book by ID:', error);
+    return null;
+  }
+}
+
+export async function getBookByIdSupabase(id: string) {
   const { data, error } = await supabase
     .from('graded_books')
     .select('*')

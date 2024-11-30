@@ -133,6 +133,10 @@ export default function MyBooksPage({
                     <p className="text-sm text-gray-600">
                       <span className='text-black'>By</span> {book.author}
                     </p>
+                    {book.booklanguage && (
+                    <span className="p-1 bg-green-100 text-green-800 rounded-lg text-xs">
+                        {book.booklanguage}
+                      </span>)}
                     <div className="flex items-center justify-between absolute -top-2 -right-2">
                       <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-lg text-sm">
                         {book.languagelevel}
