@@ -58,23 +58,57 @@ function LibraryContent() {
 
   if (loading) {
     return (
+      <>
+      <div className="sticky top-0 z-10 py-2 shadow backdrop-blur-sm border-b border-gray-200 bg-sunflower">
+        <div className="max-w-7xl mx-auto p-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className='flex items-center space-x-4'>
+          <LogoComponent/>
+      <h1 className="sm:text-4xl text-xl font-bold text-gray-800">Library</h1>
+          </div>
+            <div className="sm:w-96 w-full flex items-center justify-end gap-4">
+              <LibraryFilter />
+              <LanguageFilter />
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="flex justify-center items-center h-96">
         <div className="text-center">
           <h2 className="text-2xl font-semibold mb-2">Loading...</h2>
           <p className="text-gray-600">Please wait</p>
         </div>
       </div>
+      </>
+
     );
   }
 
   if (!languageFilteredBooks.length) {
     return (
+      <>
+      <div className="sticky top-0 z-10 py-2 shadow backdrop-blur-sm border-b border-gray-200 bg-sunflower">
+        <div className="max-w-7xl mx-auto p-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className='flex items-center space-x-4'>
+          <LogoComponent/>
+      <h1 className="sm:text-4xl text-xl font-bold text-gray-800">Library</h1>
+          </div>
+            <div className="sm:w-96 w-full flex items-center justify-end gap-4">
+              <LibraryFilter />
+              <LanguageFilter />
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="flex items-center justify-center h-96">
         <div className="text-center">
           <h2 className="text-2xl font-semibold mb-2">No books found</h2>
           <p className="text-gray-600">Please check back later</p>
         </div>
       </div>
+      </>
+
     );
   }
 
