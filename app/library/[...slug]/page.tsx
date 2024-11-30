@@ -3,6 +3,7 @@ import { getBookById } from '@/lib/bookService'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import DefaultBookCover from '@/components/DefaultBookCover'
+import Link from 'next/link'
 
 type Props = {
   params: { slug: string[] }
@@ -73,12 +74,22 @@ export default async function BookPage({ params }: Props) {
                     />
                   )}
                 </div>
+                <Link href={`/library/?level=${book.languagelevel}`}>
+                  <div className="mt-4 w-full font-medium italic">
+                    Explore similar level books →
+                  </div>
+                </Link>
               </div>
 
               {/* Book Details */}
               <div className="flex-1 p-4">
+                <div className='flex flex-row space-x-4 items-center'>
                 <div className="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold">
                   Language Level: {book.languagelevel}
+                </div>
+                <div className="inline-block px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-semibold">
+                  {book.booklanguage}
+                </div>
                 </div>
                 <h1 className="mt-4 text-3xl font-bold text-gray-900 sm:text-4xl">
                   {book.bookname}
