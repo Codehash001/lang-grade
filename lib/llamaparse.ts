@@ -45,7 +45,7 @@ Return the analysis in the specified JSON format.`
 
 async function getStructuredAnalysis(text: string): Promise<DocumentAnalysis> {
   const model = new ChatOpenAI({
-    modelName: "gpt-4",
+    modelName: "gpt-4o-mini",
     temperature: 0
   });
 

@@ -5,12 +5,12 @@ import LazyBookCover from '@/components/LazyBookCover';
 import LibraryFilter, { isInRange } from '@/components/LibraryFilter';
 import LanguageFilter from '@/components/LanguageFilter';
 import BookDetailsPanel from '@/components/BookDetailsPanel';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import type { GradedBook } from '@/types/database.types';
 import { slugify } from '@/lib/urlUtils';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-export default function LibraryPage() {
+function LibraryContent() {
   const [books, setBooks] = useState<GradedBook[]>([]);
   const [selectedBook, setSelectedBook] = useState<GradedBook | null>(null);
   const [loading, setLoading] = useState(true);
@@ -43,8 +43,6 @@ export default function LibraryPage() {
     router.push(`/library/${titleSlug}/${levelSlug}/${book.id}`);
   };
 
-  const uniqueLanguages = [...new Set(books?.map(book => book.booklanguage) || [])];
-
   const level = searchParams.get('level');
   const filteredBooks = level && level !== 'all'
     ? books.filter(book => isInRange(book.languagelevel, level))
@@ -56,7 +54,7 @@ export default function LibraryPage() {
     : filteredBooks;
 
   return (
-    <div className="flex flex-col h-screen">
+    <>
       {/* Fixed Header */}
       <div className="flex-none sm:px-8 px-5 py-4 shadow backdrop-blur-sm border-b border-gray-200">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
@@ -128,6 +126,20 @@ export default function LibraryPage() {
           relatedBooks={selectedBook ? getRelatedBooks(selectedBook) : []}
         />
       </div>
+    </>
+  );
+}
+
+export default function LibraryPage() {
+  return (
+    <div className="flex flex-col h-screen">
+      <Suspense fallback={
+        <div className="flex justify-center items-center h-screen">
+          <div className="text-gray-600">Loading...</div>
+        </div>
+      }>
+        <LibraryContent />
+      </Suspense>
     </div>
   );
 }
