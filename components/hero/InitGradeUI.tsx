@@ -108,7 +108,7 @@ export default function InitGradeUI() {
   return (
     <div className="lg:w-1/2 w-full flex justify-center h-full">
     <div 
-      className="w-full max-w-md p-8 bg-white rounded-3xl shadow-2xl"
+      className="w-full max-w-md p-8 bg-lightblue rounded-3xl shadow-2xl"
       // onDragOver={handleDragOver}
       // onDrop={handleDrop}
     >

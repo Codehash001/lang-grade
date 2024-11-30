@@ -13,6 +13,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from 'next/navigation'
 import UpdateBookCover from '@/components/UpdateBookCover';
 import SearchBooks from '@/components/SearchBooks';
+import Link from 'next/link';
+import LogoComponent from '@/components/logo-component';
 
 interface HeroLeftProps {
   user: UserInfo | null;
@@ -93,14 +95,10 @@ export default function MyBooksPage({
   return (
     <div className="flex flex-col h-screen">
       {/* Fixed Header */}
-      <div className="flex-none sm:px-8 px-5 py-6 shadow backdrop-blur-sm border-b border-gray-200">
+      <div className="flex-none sm:px-8 px-5 py-6 shadow backdrop-blur-sm border-b border-gray-200 bg-sunflower/80">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <div className='flex items-center space-x-4'>
-          <div className="bg-white text-white rounded-full border border-gray-200 shadow-xl w-12 h-12 flex items-center justify-center">
-        <span className="text-xs font-bold">
-          <img src="/images/logo.png" alt="Logo" className="w-10 h-auto"/>
-        </span>
-      </div>
+          <LogoComponent/>
       <h1 className="sm:text-4xl text-xl font-bold text-gray-800">My Books</h1>
           </div>
           <div className="flex items-center gap-4">

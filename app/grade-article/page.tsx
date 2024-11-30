@@ -13,6 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import LogoComponent from "@/components/logo-component"
 
 const CEFR_LEVELS = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
 
@@ -78,26 +79,22 @@ export default function GradeArticlePage() {
   return (
     <div className="flex flex-col h-screen">
       {/* Fixed Header */}
-      <header className="flex-none sm:px-8 px-5 py-2 shadow backdrop-blur-sm border-b border-gray-200">
+      <header className="flex-none sm:px-8 px-5 py-2 shadow backdrop-blur-sm border-b border-gray-200 bg-sunflower">
         <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6">
         <div className='flex items-center space-x-4'>
-          <div className="bg-white text-white rounded-full border border-gray-200 shadow-xl w-12 h-12 flex items-center justify-center">
-        <span className="text-xs font-bold">
-          <img src="/images/logo.png" alt="Logo" className="w-10 h-auto"/>
-        </span>
-      </div>
+          <LogoComponent/>
       <h1 className="sm:text-4xl text-xl font-bold text-gray-800">Grade Articles</h1>
           </div>
         </div>
       </header>
 
       {/* Scrollable Content */}
-      <main className="flex-1 overflow-auto">
-        <div className="max-w-7xl mx-auto px-4 py-6 sm:px-6 space-y-6">
+      <main className="flex-1 overflow-auto mih-h-screen items-center justify-center">
+        <div className="max-w-7xl mx-auto px-4 py-6 sm:px-6 space-y-6 h-full">
           {/* Input Methods Grid */}
           <div className="grid gap-6 sm:grid-cols-2">
             {/* URL Input */}
-            <div className="bg-white p-4 sm:p-6 rounded-lg border shadow-sm flex flex-col h-full">
+            <div className="bg-lightblue p-4 sm:p-6 rounded-lg border shadow flex flex-col">
               <h2 className="text-xl font-semibold mb-2">Article URL</h2>
               <p className="text-sm text-gray-600 mb-4">Paste the URL of the article you want to analyze</p>
               <form onSubmit={(e) => handleSubmit(e, true)} className="flex flex-col flex-grow">
@@ -115,7 +112,7 @@ export default function GradeArticlePage() {
             </div>
 
             {/* Text Input */}
-            <div className="bg-white p-4 sm:p-6 rounded-lg border shadow-sm flex flex-col h-full">
+            <div className="bg-lightblue p-4 sm:p-6 rounded-lg border shadow flex flex-col h-full">
               <h2 className="text-xl font-semibold mb-2">Article Text</h2>
               <p className="text-sm text-gray-600 mb-4">Or paste the article text directly</p>
               <form onSubmit={(e) => handleSubmit(e, false)} className="flex flex-col flex-grow">

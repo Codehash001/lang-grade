@@ -10,6 +10,8 @@ import type { GradedBook } from '@/types/database.types';
 import { slugify } from '@/lib/urlUtils';
 import { useRouter, useSearchParams } from 'next/navigation';
 import SearchBooks from '@/components/SearchBooks';
+import Link from 'next/link';
+import LogoComponent from '@/components/logo-component';
 
 function LibraryContent() {
   const [books, setBooks] = useState<GradedBook[]>([]);
@@ -79,15 +81,11 @@ function LibraryContent() {
   return (
     <>
       {/* Header */}
-      <div className="sticky top-0 z-10 py-2 shadow backdrop-blur-sm border-b border-gray-200">
+      <div className="sticky top-0 z-10 py-2 shadow backdrop-blur-sm border-b border-gray-200 bg-sunflower">
         <div className="max-w-7xl mx-auto p-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className='flex items-center space-x-4'>
-          <div className="bg-white text-white rounded-full border border-gray-200 shadow-xl w-12 h-12 flex items-center justify-center">
-        <span className="text-xs font-bold">
-          <img src="/images/logo.png" alt="Logo" className="w-10 h-auto"/>
-        </span>
-      </div>
+          <LogoComponent/>
       <h1 className="sm:text-4xl text-xl font-bold text-gray-800">Library</h1>
           </div>
             <div className="sm:w-96 w-full flex items-center justify-end gap-4">
